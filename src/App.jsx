@@ -1,43 +1,35 @@
-import { ColorType, createChart, AreaSeries } from 'lightweight-charts';
-import { useEffect, useRef } from 'react';
+import React from 'react';
 
-function App() {
-  const chartContainerRef = useRef(null);
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-  useEffect(() => {
-    const initialData = [
-      { time: '2018-12-22', value: 32.51 },
-      { time: '2018-12-23', value: 31.11 },
-      { time: '2018-12-24', value: 27.02 },
-      { time: '2018-12-25', value: 27.32 },
-      { time: '2018-12-26', value: 25.17 },
-      { time: '2018-12-27', value: 28.89 },
-      { time: '2018-12-28', value: 25.46 },
-      { time: '2018-12-29', value: 23.92 },
-      { time: '2018-12-30', value: 22.68 },
-      { time: '2018-12-31', value: 22.67 },
-    ];
+import Home from './Pages/Home';
+import Navbar from './component/Navbar';
+import Area from './Pages/Area';
+import BaseLine from './Pages/BaseLine';
+import Bar from './Pages/Bar';
+import Candlestick from './Pages/Candlestick';
+import Histogram from './Pages/Histogram';
+import Line from './Pages/Line';
 
-    const chart = createChart(chartContainerRef.current, {
-      layout: {
-        background: { type: ColorType.Solid, color: 'white' },
-      },
-      width: chartContainerRef.current.clinetWidth,
-      height: 500,
-    });
-
-    const newSeries = chart.addSeries( AreaSeries,{
-      lineColor: '#2962FF',
-      topColor: '#2962FF',
-      bottomColor: 'rgba(41,98,225,0.28)',
-    });
-
-    newSeries.setData(initialData);
-
-    return () => chart.remove(); // cleanup
-  }, []);
-
-  return <div ref={chartContainerRef} />;
+export default function App() {
+  
+  return (
+    <Router>
+      <div className="min-h-screen bg-[#050505] text-white">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={ <Home />}  />
+            <Route path="/area" element={ <Area />} />
+            <Route path="/baseline"  element={ <BaseLine />}/>
+            <Route path="/bar" element={ <Bar />} />
+            <Route path="/candlestick" element={ <Candlestick />} />
+            <Route path="/histogram" element={ <Histogram />} />
+            <Route path="/line" element={ <Line />} />
+            <Route path="*"  element={ <Home />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
+  );
 }
-
-export default App;
